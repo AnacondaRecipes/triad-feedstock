@@ -1,5 +1,5 @@
 {% set name = "triad" %}
-{% set version = "0.8.6" %}
+{% set version = "0.9.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6f2712fa9c68f22eb376ff36a2439935ea277fe24a36d3eafdba2f3addd0cc33
+  sha256: e4dff41ffbb98bad4d9741c9dd632890cdfe0b873f23d76d2b5f9ca41d4440a7
 
 build:
+  number: 0
   # pyarrow is not supported on s390x, hence skipping this arch.
   skip: true  # [py<37 or s390x]
-  number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
