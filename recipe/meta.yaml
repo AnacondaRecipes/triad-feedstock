@@ -30,6 +30,8 @@ requirements:
     - fsspec >=2022.5.0
     # TODO: remove this hard dependency
     - fs
+    # imported in triad/utils/pyarrow.py
+    - packaging
 
 test:
   source_files:
