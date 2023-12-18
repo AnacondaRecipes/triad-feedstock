@@ -28,7 +28,6 @@ requirements:
     - six
     - pyarrow >=6.0.1
     - fsspec >=2022.5.0
-    # TODO: remove this hard dependency
     - fs
     # imported in triad/utils/pyarrow.py
     - packaging
