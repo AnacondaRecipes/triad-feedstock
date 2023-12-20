@@ -1,19 +1,19 @@
 {% set name = "triad" %}
-{% set version = "0.8.6" %}
+{% set version = "0.9.3" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6f2712fa9c68f22eb376ff36a2439935ea277fe24a36d3eafdba2f3addd0cc33
+  url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 64215894abd69e8f0c298a74f10750b5227abc585bc7191ffc3420ef1ee5999c
 
 build:
-  # pyarrow is not supported on s390x, hence skipping this arch.
-  skip: true  # [py<37 or s390x]
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
+  # pyarrow is not supported on s390x, hence skipping this arch.
+  skip: true  # [py<38 or s390x]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
@@ -22,14 +22,15 @@ requirements:
     - setuptools
     - wheel
   run:
-    - python 
-    - ciso8601
-    - fs
-    - importlib_metadata  # [py<38]
+    - python
     - numpy
-    - pandas >=1.2.0
-    - pyarrow
+    - pandas >=1.3.5
     - six
+    - pyarrow >=6.0.1
+    - fsspec >=2022.5.0
+    - fs
+    # imported in triad/utils/pyarrow.py
+    - packaging
 
 test:
   source_files:
@@ -43,10 +44,7 @@ test:
     - pytest-mock
   commands:
     - pip check
-    # Two tests fail for python 3.11 when a function from cloudpickle package is used, required for running tests. 
-    # It is possible that we need to update cloudpickle to the latest version. Switching off these tests for now. 
-    - pytest -vvv --capture=tee-sys tests -k "not (test_conditional_dispatcher or test_runonce)"  # [py>=311]
-    - pytest -vvv --capture=tee-sys tests  # [py<311]
+    - pytest -vvv --capture=tee-sys tests
 
 about:
   home: https://github.com/fugue-project/triad
