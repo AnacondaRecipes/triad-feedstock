@@ -1,5 +1,5 @@
 {% set name = "triad" %}
-{% set version = "0.9.3" %}
+{% set version = "0.9.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 64215894abd69e8f0c298a74f10750b5227abc585bc7191ffc3420ef1ee5999c
+  sha256: e2e64a5b75d6b65acad4d1eb1ed4877619ae0e724d31c1992c7d145052d4cb07
 
 build:
   number: 0
