@@ -31,6 +31,11 @@ requirements:
     - packaging
 
 test:
+  # downstreams:
+  #   - adagio
+  #   - fugue
+  #   - qpd
+  #   - fugue-sql-antlr
   source_files:
     - tests
   imports:
