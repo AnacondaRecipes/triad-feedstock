@@ -1,5 +1,5 @@
 {% set name = "triad" %}
-{% set version = "0.9.8" %}
+{% set version = "1.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,11 @@ package:
 
 source:
   url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: e2e64a5b75d6b65acad4d1eb1ed4877619ae0e724d31c1992c7d145052d4cb07
+  sha256: 0c6dc83e9fa432125bae317fa075b366548916e4231b2d5ee3f0a798c7eda16e
 
 build:
   number: 0
-  # pyarrow is not supported on s390x, hence skipping this arch.
-  skip: true  # [py<38 or s390x]
+  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
@@ -28,11 +27,15 @@ requirements:
     - six
     - pyarrow >=6.0.1
     - fsspec >=2022.5.0
-    - fs
     # imported in triad/utils/pyarrow.py
     - packaging
 
 test:
+  # downstreams:
+  #   - adagio
+  #   - fugue
+  #   - qpd
+  #   - fugue-sql-antlr
   source_files:
     - tests
   imports:
@@ -42,6 +45,9 @@ test:
     - pip
     - pytest
     - pytest-mock
+    # Setuptools is required for the tests to run.
+    # E   ModuleNotFoundError: No module named 'pkg_resources'
+    - setuptools
   commands:
     - pip check
     - pytest -vvv --capture=tee-sys tests
