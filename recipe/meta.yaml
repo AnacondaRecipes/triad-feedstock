@@ -1,5 +1,5 @@
 {% set name = "triad" %}
-{% set version = "1.0.0" %}
+{% set version = "1.0.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,27 +7,28 @@ package:
 
 source:
   url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 0c6dc83e9fa432125bae317fa075b366548916e4231b2d5ee3f0a798c7eda16e
+  sha256: 27c07b5b76e9562a0a0d7e6b1c87eb18573306be281a8002337675e3fba80ecc
 
 build:
   number: 0
-  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
+  skip: true  # [py<39]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools
+    - setuptools >=61.0,<81
     - wheel
   run:
     - python
     - numpy
-    - pandas >=1.3.5
+    - pandas >=2
     - six
     - pyarrow >=6.0.1
     - fsspec >=2022.5.0
     # imported in triad/utils/pyarrow.py
+    # https://github.com/fugue-project/triad/blob/v1.0.2/triad/utils/pyarrow.py#L10
     - packaging
 
 test:
@@ -47,7 +48,7 @@ test:
     - pytest-mock
     # Setuptools is required for the tests to run.
     # E   ModuleNotFoundError: No module named 'pkg_resources'
-    - setuptools
+    - setuptools <81
   commands:
     - pip check
     - pytest -vvv --capture=tee-sys tests
