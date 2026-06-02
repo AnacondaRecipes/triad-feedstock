@@ -2,11 +2,11 @@
 {% set version = "1.0.2" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 27c07b5b76e9562a0a0d7e6b1c87eb18573306be281a8002337675e3fba80ecc
 
 build:
