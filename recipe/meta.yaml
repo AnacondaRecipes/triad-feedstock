@@ -29,9 +29,6 @@ requirements:
     # imported in triad/utils/pyarrow.py
     # https://github.com/fugue-project/triad/blob/v1.0.4/triad/utils/pyarrow.py#L10
     - packaging
-  run_constrained:
-    # optional fast datetime parsing extra (upstream: [project.optional-dependencies] ciso8601)
-    - ciso8601
 
 test:
   # downstreams:
