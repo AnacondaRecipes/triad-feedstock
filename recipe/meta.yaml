@@ -1,5 +1,5 @@
 {% set name = "triad" %}
-{% set version = "1.0.2" %}
+{% set version = "1.0.4" %}
 
 package:
   name: {{ name }}
@@ -7,19 +7,18 @@ package:
 
 source:
   url: https://github.com/fugue-project/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 27c07b5b76e9562a0a0d7e6b1c87eb18573306be281a8002337675e3fba80ecc
+  sha256: 2a0c5b0641fa2602695e8ae7f40b5e21f0bf0ee3380a8a4562594b18b23e5ec3
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-  skip: true  # [py<39]
+  skip: true  # [py<311]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools >=61.0,<81
-    - wheel
+    - setuptools >=61.0
   run:
     - python
     - numpy
@@ -28,8 +27,11 @@ requirements:
     - pyarrow >=6.0.1
     - fsspec >=2022.5.0
     # imported in triad/utils/pyarrow.py
-    # https://github.com/fugue-project/triad/blob/v1.0.2/triad/utils/pyarrow.py#L10
+    # https://github.com/fugue-project/triad/blob/v1.0.4/triad/utils/pyarrow.py#L10
     - packaging
+  run_constrained:
+    # optional fast datetime parsing extra (upstream: [project.optional-dependencies] ciso8601)
+    - ciso8601
 
 test:
   # downstreams:
